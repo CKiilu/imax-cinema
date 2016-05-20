@@ -1,5 +1,6 @@
 function custom_ajax(path, csrf) {
     $('.action--buy').click(function() {
+        $('#formie, #form_div').show(1000);
         $.ajax({
             url: path,
             type: "POST",
@@ -56,12 +57,6 @@ function succeed(data) {
         'height': '100px',
         'overflow-y': 'scroll'
     });
-    $('p').css({
-        'color': '#000'
-    });
-    $('span').css({
-        'color': '#000'
-    });
 
     $('#id_pricing').change(function() {
         var value = $(this).val();
@@ -95,7 +90,7 @@ function succeed(data) {
         var reg_remaining_tkts = (num_seats - +stu);
         var stu_remaining_tkts = (num_seats - +reg);
         var condition = (reg_id === current.attr('id'));
-        var remaining_tkts = condition ? reg_remaining_tkts :stu_remaining_tkts;
+        var remaining_tkts = condition ? reg_remaining_tkts : stu_remaining_tkts;
         if (total > num_seats) {
             total = num_seats;
             current.val(remaining_tkts);
@@ -105,11 +100,9 @@ function succeed(data) {
 }
 
 function getTotalPrice(path) {
-    $('#total').css('color', 'black');
-    $('.total').css('color', 'black');
-    var stu_tkts = $('#id_number_of_student_tickets');
-    stu_tkts.hide();
-    $(stu_tkts.get(0).labels).hide();
+    $('.total, .total span').css('color', 'black');
+    $('#id_number_of_student_tickets, #formie, #form_div').hide();
+    $($('#id_number_of_student_tickets').get(0).labels).hide();
     $('.ticketing').change(function() {
         var price_id = $('select').val();
         var reg_tkts = $('#id_number_of_regular_tickets').val();
