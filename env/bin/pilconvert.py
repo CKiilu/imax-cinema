@@ -1,4 +1,4 @@
-#!/home/chris/python/django/imax-cinema/env/bin/python
+#!/home/chriskiilu/Projects/imax-cinema/env/bin/python2
 #
 # The Python Imaging Library.
 # $Id$

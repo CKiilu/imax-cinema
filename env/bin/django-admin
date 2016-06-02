@@ -1,4 +1,4 @@
-#!/home/chris/python/django/imax-cinema/env/bin/python
+#!/home/chriskiilu/Projects/imax-cinema/env/bin/python2
 
 # -*- coding: utf-8 -*-
 import re

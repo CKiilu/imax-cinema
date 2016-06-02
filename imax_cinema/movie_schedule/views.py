@@ -1,3 +1,4 @@
+import requests
 import string
 
 from django.db.models import Q
@@ -5,12 +6,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
+from lipisha import Lipisha
 import simplejson
 
 from .custom import chunks
 from .forms import TicketForm
 from .models import Movie, MoviePricing, MovieViewing, Ticket, CinemaSeat
 # Create your views here.
+LIPISHA_API_KEY = "d727744fb1ebc29ce87018212e4b4f70"
+LIPISHA_API_SIGNATURE = "CXlGBfUzTY3Zk47UBZCa/fn7X4AZlVcXprN2MmsL3AcmMhV0r9rBI7o31jf/eLyX8RsG6eAgOwaEjEizJujH69d9j+ysTyU7VtJ97jriI3KNHRdmYVQIyM9joc3gslWBzNDZ7giwEreWOvhxiFnVyKGGMnbr1YVDSnmvDUnI/ks="
+lipisha = Lipisha(LIPISHA_API_KEY, LIPISHA_API_SIGNATURE, api_environment='test')
+MPESA_ACC_NO = '01996'
+
 def home(request):
 	movie_queryset = Movie.objects.all()
 	length = len(movie_queryset)
@@ -34,6 +41,23 @@ def schedule(request):
 	return render(request, "schedule.html", context)
 
 def movie(request, id = None):
+	# print lipisha.get_transactions()
+	credit_kwargs = dict(
+			card_number='4242424242424242',
+			address1='1000',
+			expiry_date='03/12',
+			name='Josphat',
+			country='Nyeri',
+			state='asda',
+			zip='asda',
+			amount='1000',
+			currency='KES',
+			security_code='1218'
+			)
+	lipisha._make_api_call(
+			api_method='authorize_card_transaction',
+			# **credit_kwargs
+			)
 	single_movie = get_object_or_404(Movie, id = id)
 	viewset = MovieViewing.objects.get(movie=single_movie)
 	cinema_seats = CinemaSeat.objects.all()
@@ -117,6 +141,8 @@ def total_price(request):
 		total = regular + student
 		print "Reg", current_price.regular_fee, "PRice", regular
 		print "Stu", current_price.student_fee, "Price", student
+
+		
 		response = {
 			'total': str(total),
 			}

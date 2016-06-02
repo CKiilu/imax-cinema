@@ -1,4 +1,4 @@
-#!/home/chris/python/django/imax-cinema/env/bin/python
+#!/home/chriskiilu/Projects/imax-cinema/env/bin/python2
 from __future__ import print_function
 import base64
 import os
