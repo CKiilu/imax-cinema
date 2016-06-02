@@ -67,7 +67,7 @@ class Ticket(models.Model):
 		on_delete=models.CASCADE,
 		null=True
 		)
-	date = models.DateField(default=timezone.now())
+	date = models.DateField(default=timezone.now)
 	seat = models.ManyToManyField(CinemaSeat)
 	number_of_regular_tickets = models.PositiveIntegerField(default=0)
 	number_of_student_tickets = models.PositiveIntegerField(default=0)
